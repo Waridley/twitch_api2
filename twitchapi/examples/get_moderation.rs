@@ -21,6 +21,7 @@ fn main() {
 
 #[tokio::main]
 async fn run() -> Result<(), Box<dyn std::error::Error + Send + Sync + 'static>> {
+    let k = "hello this is a test";
     dotenv::dotenv().unwrap();
     let mut args = std::env::args().skip(1);
     let token = UserToken::from_existing(
