@@ -43,6 +43,7 @@ pub mod subscriptions;
 pub mod tags;
 pub mod users;
 pub mod videos;
+pub mod webhooks;
 
 pub(crate) mod ser;
 pub use ser::Error as SerializeError;
@@ -585,6 +586,20 @@ pub trait Paginated: Request {
 struct Pagination {
     #[serde(default)]
     cursor: Option<Cursor>,
+}
+
+/// Endpoint is also a webhook
+pub trait Topic: serde::Serialize {
+    /// The path to the endpoint relative to the helix root. eg. `channels` for [Get Channel Information](https://dev.twitch.tv/docs/api/reference#get-channel-information)
+    const PATH: &'static str;
+    // /// Scopes needed by this endpoint
+    // const SCOPE: &'static [twitch_oauth2::Scope];
+    // /// Optional scopes needed by this endpoint
+    // const OPT_SCOPE: &'static [twitch_oauth2::Scope] = &[];
+    /// Response type. twitch's response will  deserialize to this.
+    type Response;
+    /// Defines layout of the url parameters.
+    fn query(&self) -> Result<String, ser::Error> { ser::to_string(&self) }
 }
 
 /// A cursor is a pointer to the current "page" in the twitch api pagination

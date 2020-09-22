@@ -111,6 +111,11 @@ name = "channel_information"
 path = "examples/channel_information.rs"
 required-features = ["twitch_oauth2/reqwest_client", "reqwest_client"]
 
+[[example]]
+name = "webhooks"
+path = "examples/webhooks.rs"
+required-features = ["twitch_oauth2/reqwest_client", "reqwest_client"]
+
 
 [package.metadata.docs.rs]
 features = ["all", "unsupported"]
